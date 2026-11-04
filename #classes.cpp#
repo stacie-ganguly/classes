@@ -1,0 +1,40 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+//i am just playing around with classes
+
+//parent class
+class allMedia {
+protected:
+  
+  
+public:
+  //double sideLength;
+
+  virtual void cool() {
+    cout << "All media is coolio" << endl;
+                 
+  }
+};
+
+class videoGames : public allMedia {
+public:
+
+  void cool() override {
+    cout << "Only video games are coolio" << endl;
+  }
+};
+
+
+int main() {
+
+  allMedia* a = new videoGames();
+
+  a->cool();
+
+  delete a;
+  
+
+  return 0;
+}

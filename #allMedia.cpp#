@@ -1,0 +1,34 @@
+//ALL MEDIA PARENT CLASS
+
+#include <iostream>
+#include <cstring>
+#include "allMedia.h"
+
+using namespace std;
+//defining my parent class:
+class Media {
+public:
+  
+  char artist[50];
+  char director[50];
+  char title[50];
+  char publisher[50];
+
+  virtual void printSomething () {
+    int doubleDuration = duration * 2;
+    cout << "If you double the duration, you get: " << doubleDuration << endl;
+    
+  }
+
+};
+
+
+int main() {
+  Media object;
+
+  object.duration = 104;
+
+  object.printSomething();
+  
+  return 0;
+}
