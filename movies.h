@@ -16,13 +16,13 @@ private:
   float rating; // out of 5
 
 public:
-  movies(const char* title[50], const char* director[50], int duration, int year, float rating);
+  movies(const char* title, const char* director, int duration, int year, float rating);
 
   ~movies();
 
   //defining the getting methods
 
-  char* getDirector() const;
+  const char* getDirector() const;
   int getDuration() const;
   float getRating() const;
 
@@ -33,4 +33,4 @@ public:
   int getType() const override; //return 3 for movie
 };
 
-#endif;
+#endif

@@ -1,20 +1,24 @@
 //ACTUAL movie class
 
 #include "movies.h"
-#include <iostream.
+#include <iostream>
 
 using namespace std;
 
-movies(char title[50], char director[50], int duration, int year, float rating);
+movies::movies(const char title[50], const char director[50], int duration, int year, float rating): Media(title, year) {
+  strcpy(this->director, director);
+  this-> duration = duration;
+  this-> rating = rating;
+}
 
 movies::~movies() {}
 
-char movies::getDirctor() const {
+const char* movies::getDirector() const {
   return director;
 }
 
 int movies::getDuration() const {
-  return duration
+  return duration;
 }
 
 float movies::getRating() const {
@@ -27,7 +31,7 @@ int movies::getType() const {
 
 
 void movies::printInfo() const {
-  allMedia::printInfo();
+  Media::printInfo();
   cout << "Director: " << director << endl;
   cout << "Duration: " << duration << endl;
   cout << "Rating: " << rating << endl;

@@ -8,9 +8,11 @@
 
 using namespace std;
 
+void addMedia(vector<Media*>& database);
+
 int main () {
 
-  vector <allMedia*> database;
+  vector <Media*> database;
   
   char user_input[50];
   //char media_type[50];
@@ -21,8 +23,7 @@ int main () {
 
   if(strcmp(user_input, "ADD") == 0) {
     cout << "You are adding now..." << endl;
-
-    }
+    addMedia(database);
   }
 
   return 0;
@@ -32,11 +33,11 @@ int main () {
 
 //defining the ADD function
 
-void addMedia(vector<allMedia*>& database) {
+void addMedia(vector<Media*>& database) {
   char media_type[50];
   
   cout << "What type of media are you adding to the database? (Movies, Music, VideoGames): ";
-  cin >> media_input;
+  cin >> media_type;
 
   char title[50];
   int year;
@@ -44,12 +45,12 @@ void addMedia(vector<allMedia*>& database) {
   cout << "Enter the title: ";
   cin >> title;
   cin.ignore();
-  getline(cin, title);
+  cin.get(title, 50);
   
   cout << "Enter the year it was made: ";
   cin >> year;
   
-  if(strcmp(media_input, "Movies") == 0) {
+  if(strcmp(media_type, "Movies") == 0) {
     char director[50];
     float rating;
     int duration;
@@ -57,7 +58,7 @@ void addMedia(vector<allMedia*>& database) {
     cout << "Enter the director's name; ";
     cin >> director;
     cin.ignore();
-    getline(cin, director);
+    cin.get(director, 50);
 
     cout << "Enter the movie's rating (out of 5: ";
     cin >> rating;
@@ -65,7 +66,7 @@ void addMedia(vector<allMedia*>& database) {
     cout << "Enter the duration (in mins): ";
     cin >> duration;
 
-    database.push_back(new movies title, director, duration, year, rating);
+    database.push_back(new movies (title, director, duration, year, rating));
     cout << "Movie added successfully!" << endl;
 
     
