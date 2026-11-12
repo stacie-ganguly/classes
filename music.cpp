@@ -28,3 +28,10 @@ const char* music::getPublisher() const {
 int music::getType() const {
   return 2;
 }
+
+void music::printInfo() const {
+  Media::printInfo();
+  cout << "Artist: " << artist << endl;
+  cout << "Duration: " << duration << endl;
+  cout << "Publisher: " << publisher << endl;
+}

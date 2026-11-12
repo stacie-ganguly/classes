@@ -3,6 +3,8 @@
 #include <iostream>
 #include "allMedia.h"
 #include "movies.h"
+#include "music.h"
+#include "videoGames.h"
 #include <cstring>
 #include <vector>
 
@@ -21,7 +23,7 @@ int main () {
 
   while(running == true) {
   
-    cout << "What would you like to do? (ADD, SEARCH, DELETE): ";
+    cout << "What would you like to do? (ADD, SEARCH, DELETE, or QUIT): ";
     cin >> user_input;
 
     if(strcmp(user_input, "ADD") == 0) {
@@ -77,6 +79,7 @@ void addMedia(vector<Media*>& database) {
     database.push_back(new movies (title, director, duration, year, rating));
     cout << "Movie added successfully!" << endl;
 
+    // IF ITS MUSIC INSTEAD
   } else if(strcmp(media_type, "Music") == 0) {
     char artist[50];
     int duration;
@@ -97,6 +100,25 @@ void addMedia(vector<Media*>& database) {
 
     database.push_back(new music (title, artist, duration, year, publisher));
     cout << "Song added successfully!" << endl;
+
+
+  //IF ITS VIDEO GAMES INSTEAD
+
+  } else if(strcmp(media_type, "Video Games") == 0) {
+  
+    char publisher[50];
+    float rating;
+    
+    cout << "Enter the rating (out of 10): ";
+    cin >> rating;
+
+    cout << "Enter the publisher: ";
+    
+    cin.getline(publisher, 50);
+    cin.ignore(1000, '\n');
+
+    database.push_back(new games (title, rating, year, publisher));
+    cout << "Video Game added successfully!" << endl;
   }
 
 					 
