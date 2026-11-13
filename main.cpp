@@ -70,7 +70,7 @@ void addMedia(vector<Media*>& database) {
   int year;
 
   cout << "Enter the title: ";
-  cin.get(title, 50);
+  cin.getline(title, 50);
   cin.ignore(1000, '\n');
   
   
@@ -84,9 +84,10 @@ void addMedia(vector<Media*>& database) {
     int duration;
 
     cout << "Enter the director's name; ";
-    cin >> director;
-    //cin.get(director, 50);
+    //cin >> director;
     cin.ignore(1000, '\n');
+    cin.get(director, 50);
+    
     
 
     cout << "Enter the movie's rating (out of 10): ";
@@ -105,17 +106,17 @@ void addMedia(vector<Media*>& database) {
     char publisher[50];
 
     cout << "Enter the artist's name: ";
-    cin >> artist;
-    //cin.get(artist, 50);
     cin.ignore(1000, '\n');
+    cin.get(artist, 50);
+    
 
     cout << "Enter the duration (in mins): ";
     cin >> duration;
 
     cout << "Enter the publisher: ";
-    cin >> publisher;
-    //cin.get(publisher, 50);
     cin.ignore(1000, '\n');
+    cin.get(publisher, 50);
+   
 
     database.push_back(new music (title, artist, duration, year, publisher));
     cout << "Song added successfully! Total number of items in database: " << database.size() << endl;
@@ -132,9 +133,9 @@ void addMedia(vector<Media*>& database) {
     cin >> rating;
 
     cout << "Enter the publisher: ";
-    
-    cin.getline(publisher, 50);
     cin.ignore(1000, '\n');
+    cin.getline(publisher, 50);
+    
 
     database.push_back(new games (title, rating, year, publisher));
     cout << "Video Game added successfully! Total number of items in database: " << database.size() << endl;
@@ -158,8 +159,9 @@ vector<int> findMedia(const vector<Media*>& database) {
     char searchTitle[50]; //what title they are looking for
 
     cout << "Enter the title you are looking for: ";
-    cin >> searchTitle;
     cin.ignore(1000,'\n');
+    cin.getline(searchTitle,50);
+    
 
     for(size_t i = 0; i < database.size(); i++) {
       if(strcmp(database[i]->getTitle(), searchTitle) == 0) {

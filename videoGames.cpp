@@ -5,7 +5,7 @@
 
 using namespace std;
 
-games::games(const char title[50], float rating, int year, const char publsiher[50]): Media(title,year) {
+games::games(const char title[50], float rating, int year, const char publisher[50]): Media(title,year) {
   strcpy(this->publisher, publisher);
   this-> rating = rating;
 }
