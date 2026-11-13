@@ -12,6 +12,7 @@ using namespace std;
 
 void addMedia(vector<Media*>& database);
 void searchMedia(const vector<Media*>& database);
+void deleteMedia(vector<Media*>& database);
 
 int main () {
 
@@ -33,6 +34,9 @@ int main () {
     } else if(strcmp(user_input, "SEARCH") == 0) {
       cout << "You are searching now.." << endl;
       searchMedia(database);
+    } else if(strcmp(user_input, "DELETE") == 0) {
+      cout << "You are now deleting.." << endl;
+      deleteMedia(database);
     }
 
   }
@@ -128,22 +132,16 @@ void addMedia(vector<Media*>& database) {
 					 
 }
 
-//search function
+//finding media function - to use in search and delete function
 
-void searchMedia(const vector<Media*>& database) {
-  //checking if its empty
-  if(database.empty()) {
-    cout << "Database is empty. Nothing to search! Try adding something" << endl;
-    return;
-  }
-
+vector<int> findMedia(const vector<Media*>& database) {
   //searching
   char searchType[10]; //user will be asked to search with either title or year
   cout << "What would you like to search with? (title, year): ";
   cin >> searchType;
   cin.ignore(1000, '\n');
 
-  int matchCount = 0;
+  vector<int> matching; 
 
   if(strcmp(searchType, "title") == 0) {
     char searchTitle[50]; //what title they are looking for
@@ -152,14 +150,9 @@ void searchMedia(const vector<Media*>& database) {
     cin >> searchTitle;
     cin.ignore(1000,'\n');
 
-    cout << "------- Search Results -------- " << endl;
-
     for(size_t i = 0; i < database.size(); i++) {
       if(strcmp(database[i]->getTitle(), searchTitle) == 0) {
-	database[i] -> printInfo();
-	cout << "-------------------------" << endl;
-
-	matchCount++;
+	matching.push_back(i);
       }
     }
   } else if(strcmp(searchType, "year") == 0) {
@@ -168,32 +161,96 @@ void searchMedia(const vector<Media*>& database) {
     cout <<"Enter the year you are looking for: ";
     cin >> searchYear;
 
-    cout << "------- Search Results -------- " << endl;
-
     for(size_t i = 0; i < database.size(); i++) {
       if(database[i]->getYear() == searchYear) {
-	database[i] -> printInfo();
-	cout << "-------------------------" << endl;
-
-	matchCount++;
+	matching.push_back(i);
       }
     }
 
-  } else {
-    cout << "Invalid Search option"  << endl;
-    
   }
 
-  if(matchCount == 0) {
-    cout << "No matching items found in the database" << endl;
-    
-  } else {
-    cout << "Found " << matchCount << " matching items" << endl;
-  }
-      
+  return matching;
 }
 
-//delete function (same functionality as the search it will just be removing it instead of printing
+//search function
 
+void searchMedia(const vector <Media*>& database) {
+//checking if its empty
+  if(database.empty()) {
+    cout << "Database is empty. Nothing to search! Try adding something" << endl;
+    return;
+  }
+
+  vector <int> matches = findMedia(database);
+
+  if(matches.empty()) {
+    cout << "No matching items in the database!" << endl;
+    return;
+  }
+
+  cout << "----------Search Results----------" << endl;
+  for(size_t i = 0; i < matches.size(); i++) {
+    int index = matches[i];
+
+    cout << "Index " << i << endl;
+    database[index]->printInfo();
+    cout << " -----------------------------" << endl;
+    
+  }
   
+}
+
+//delete function 
+
+void deleteMedia(vector<Media*>& database) {
+//checking if its empty
+  if(database.empty()) {
+    cout << "Database is empty. Nothing to search! Try adding something" << endl;
+    return;
+  }
+
+  vector <int> matches = findMedia(database);
+  if(matches.empty()) {
+    cout << "No matching items in the database!" << endl;
+    return;
+  }
   
+  cout << "----------Items to delete----------" << endl;
+  for(size_t i = 0; i < matches.size(); i++) {
+    int index = matches[i];
+
+    cout << "Index " << i << endl;
+    database[index]->printInfo();
+    cout << " -----------------------------" << endl;
+    
+  }
+
+  //confirm if you wanna delete
+
+  char user_confirm[10];
+
+  cout << "Are you sure you want to delete those items (yes/no)" << endl;
+
+  cin >> user_confirm;
+  cin.ignore(1000, '\n');
+
+  if(strcmp(user_confirm, "yes") == 0) {
+
+    //safely deleting highest index to lowest index 
+    for(int i = matches.size() - 1; i >=0; i--) {
+      int targetIndex = matches[i];
+
+      delete database[targetIndex];
+
+      database.erase(database.begin() + targetIndex);
+    
+    }
+
+    cout << "Successfully deleted the items!" << endl;
+  } else {
+
+    cout << "Deletion Canceled" << endl;
+
+  }
+  
+}
