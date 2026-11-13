@@ -1,5 +1,13 @@
 //the main file
 
+//HEADER COMMENT:
+
+//DIYA GANGULY
+//11-12-2026
+//THIS PROGRAM ALLOWS THE USER TO ADD MOVIES, VIDEO GAMES, AND SONGS TO A DATABASE. IT LETS THEMM SEARCH THROUGH THEM AND EVEN DELETE SOME OF THEM. FINALLY THE USER CAN QUIT IF THEY CHOOSE TO.
+
+
+
 #include <iostream>
 #include "allMedia.h"
 #include "movies.h"
@@ -37,6 +45,9 @@ int main () {
     } else if(strcmp(user_input, "DELETE") == 0) {
       cout << "You are now deleting.." << endl;
       deleteMedia(database);
+    } else if(strcmp(user_input, "QUIT") == 0) {
+      cout << "Quitting...goodbye!" << endl;
+      running = false;
     }
 
   }
@@ -78,7 +89,7 @@ void addMedia(vector<Media*>& database) {
     cin.ignore(1000, '\n');
     
 
-    cout << "Enter the movie's rating (out of 5: ";
+    cout << "Enter the movie's rating (out of 10): ";
     cin >> rating;
 
     cout << "Enter the duration (in mins): ";
