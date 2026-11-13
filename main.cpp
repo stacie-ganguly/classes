@@ -11,6 +11,7 @@
 using namespace std;
 
 void addMedia(vector<Media*>& database);
+void searchMedia(const vector<Media*>& database);
 
 int main () {
 
@@ -29,6 +30,9 @@ int main () {
     if(strcmp(user_input, "ADD") == 0) {
       cout << "You are adding now..." << endl;
       addMedia(database);
+    } else if(strcmp(user_input, "SEARCH") == 0) {
+      cout << "You are searching now.." << endl;
+      searchMedia(database);
     }
 
   }
@@ -66,7 +70,7 @@ void addMedia(vector<Media*>& database) {
 
     cout << "Enter the director's name; ";
     cin >> director;
-    cin.get(director, 50);
+    //cin.get(director, 50);
     cin.ignore(1000, '\n');
     
 
@@ -77,7 +81,7 @@ void addMedia(vector<Media*>& database) {
     cin >> duration;
 
     database.push_back(new movies (title, director, duration, year, rating));
-    cout << "Movie added successfully!" << endl;
+    cout << "Movie added successfully! Total number of items in database: " << database.size() << endl;
 
     // IF ITS MUSIC INSTEAD
   } else if(strcmp(media_type, "Music") == 0) {
@@ -87,7 +91,7 @@ void addMedia(vector<Media*>& database) {
 
     cout << "Enter the artist's name: ";
     cin >> artist;
-    cin.get(artist, 50);
+    //cin.get(artist, 50);
     cin.ignore(1000, '\n');
 
     cout << "Enter the duration (in mins): ";
@@ -95,16 +99,16 @@ void addMedia(vector<Media*>& database) {
 
     cout << "Enter the publisher: ";
     cin >> publisher;
-    cin.get(publisher, 50);
+    //cin.get(publisher, 50);
     cin.ignore(1000, '\n');
 
     database.push_back(new music (title, artist, duration, year, publisher));
-    cout << "Song added successfully!" << endl;
+    cout << "Song added successfully! Total number of items in database: " << database.size() << endl;
 
 
   //IF ITS VIDEO GAMES INSTEAD
 
-  } else if(strcmp(media_type, "Video Games") == 0) {
+  } else if(strcmp(media_type, "VideoGames") == 0) {
   
     char publisher[50];
     float rating;
@@ -118,8 +122,78 @@ void addMedia(vector<Media*>& database) {
     cin.ignore(1000, '\n');
 
     database.push_back(new games (title, rating, year, publisher));
-    cout << "Video Game added successfully!" << endl;
+    cout << "Video Game added successfully! Total number of items in database: " << database.size() << endl;
   }
 
 					 
 }
+
+//search function
+
+void searchMedia(const vector<Media*>& database) {
+  //checking if its empty
+  if(database.empty()) {
+    cout << "Database is empty. Nothing to search! Try adding something" << endl;
+    return;
+  }
+
+  //searching
+  char searchType[10]; //user will be asked to search with either title or year
+  cout << "What would you like to search with? (title, year): ";
+  cin >> searchType;
+  cin.ignore(1000, '\n');
+
+  int matchCount = 0;
+
+  if(strcmp(searchType, "title") == 0) {
+    char searchTitle[50]; //what title they are looking for
+
+    cout << "Enter the title you are looking for: ";
+    cin >> searchTitle;
+    cin.ignore(1000,'\n');
+
+    cout << "------- Search Results -------- " << endl;
+
+    for(size_t i = 0; i < database.size(); i++) {
+      if(strcmp(database[i]->getTitle(), searchTitle) == 0) {
+	database[i] -> printInfo();
+	cout << "-------------------------" << endl;
+
+	matchCount++;
+      }
+    }
+  } else if(strcmp(searchType, "year") == 0) {
+    int searchYear;
+
+    cout <<"Enter the year you are looking for: ";
+    cin >> searchYear;
+
+    cout << "------- Search Results -------- " << endl;
+
+    for(size_t i = 0; i < database.size(); i++) {
+      if(database[i]->getYear() == searchYear) {
+	database[i] -> printInfo();
+	cout << "-------------------------" << endl;
+
+	matchCount++;
+      }
+    }
+
+  } else {
+    cout << "Invalid Search option"  << endl;
+    
+  }
+
+  if(matchCount == 0) {
+    cout << "No matching items found in the database" << endl;
+    
+  } else {
+    cout << "Found " << matchCount << " matching items" << endl;
+  }
+      
+}
+
+//delete function (same functionality as the search it will just be removing it instead of printing
+
+  
+  
