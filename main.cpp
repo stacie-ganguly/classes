@@ -109,14 +109,14 @@ void addMedia(vector<Media*>& database) {
 
     cout << "Enter the artist's name: ";
     cin.ignore(1000, '\n');
-    cin.get(artist, 50);
+    cin.getline(artist, 50);
     
 
     cout << "Enter the duration (in mins): ";
     cin >> duration;
+    cin.ignore(1000, '\n');
 
     cout << "Enter the publisher: ";
-    cin.ignore(1000, '\n');
     cin.get(publisher, 50);
    
 
