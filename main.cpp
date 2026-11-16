@@ -71,12 +71,12 @@ void addMedia(vector<Media*>& database) {
 
   cout << "Enter the title: ";
   cin.getline(title, 50);
-  cin.ignore(1000, '\n');
+  
   
   
   cout << "Enter the year it was made: ";
   cin >> year;
-
+  cin.ignore(1000, '\n');
   //IF ITS MOVIES
   if(strcmp(media_type, "Movies") == 0) {
     char director[50];
@@ -86,16 +86,18 @@ void addMedia(vector<Media*>& database) {
     cout << "Enter the director's name; ";
     //cin >> director;
     cin.ignore(1000, '\n');
-    cin.get(director, 50);
-    
+    cin.getline(director, 50);
+    cin.ignore(1000, '\n'); 
     
 
     cout << "Enter the movie's rating (out of 10): ";
     cin >> rating;
-
+    cin.ignore(1000, '\n');
+    
     cout << "Enter the duration (in mins): ";
     cin >> duration;
-
+    cin.ignore(1000, '\n');
+    
     database.push_back(new movies (title, director, duration, year, rating));
     cout << "Movie added successfully! Total number of items in database: " << database.size() << endl;
 
@@ -131,9 +133,9 @@ void addMedia(vector<Media*>& database) {
     
     cout << "Enter the rating (out of 10): ";
     cin >> rating;
+    cin.ignore(1000, '\n');
 
     cout << "Enter the publisher: ";
-    cin.ignore(1000, '\n');
     cin.getline(publisher, 50);
     
 
@@ -159,7 +161,6 @@ vector<int> findMedia(const vector<Media*>& database) {
     char searchTitle[50]; //what title they are looking for
 
     cout << "Enter the title you are looking for: ";
-    cin.ignore(1000,'\n');
     cin.getline(searchTitle,50);
     
 
@@ -173,7 +174,8 @@ vector<int> findMedia(const vector<Media*>& database) {
 
     cout <<"Enter the year you are looking for: ";
     cin >> searchYear;
-
+    cin.ignore(1000,'\n');
+    
     for(size_t i = 0; i < database.size(); i++) {
       if(database[i]->getYear() == searchYear) {
 	matching.push_back(i);
@@ -238,32 +240,41 @@ void deleteMedia(vector<Media*>& database) {
     
   }
 
-  //confirm if you wanna delete
+  //choose if there are multiple
 
-  char user_confirm[10];
+  int choice;
 
-  cout << "Are you sure you want to delete those items (yes/no)" << endl;
+  cout << "Enter the index of the entry you would like to delete: ";
+  cin >> choice;
+  cin.ignore(1000,'\n');
 
-  cin >> user_confirm;
-  cin.ignore(1000, '\n');
+  if(choice >= 0 && choice <(int)matches.size()) {
+      //confirm if you wanna delete
 
-  if(strcmp(user_confirm, "yes") == 0) {
+    char user_confirm[10];
 
-    //safely deleting highest index to lowest index 
-    for(int i = matches.size() - 1; i >=0; i--) {
-      int targetIndex = matches[i];
+    cout << "Are you sure you want to delete those items (yes/no)" << endl;
 
-      delete database[targetIndex];
+    cin >> user_confirm;
+    cin.ignore(1000, '\n');
 
-      database.erase(database.begin() + targetIndex);
+    if(strcmp(user_confirm, "yes") == 0) {
+      	int targetIndex = matches[choice];
+
+	delete database[targetIndex];
+
+	database.erase(database.begin() + targetIndex);
     
+      }
+
+      cout << "Successfully deleted the items!" << endl;
+    } else {
+
+      cout << "Deletion Canceled" << endl;
+
     }
 
-    cout << "Successfully deleted the items!" << endl;
-  } else {
-
-    cout << "Deletion Canceled" << endl;
-
   }
+
+
   
-}
